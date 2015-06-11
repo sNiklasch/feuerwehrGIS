@@ -1,0 +1,32 @@
+<!-- Map Elements: -->
+<div id="map"></div>
+<div class="customZoomControl-pane">
+  <a href= "#map" ng-click="map.zoomIn()" class="customZoomControl customZoomControl-in">+</a>
+  <a href= "#map" ng-click="map.zoomOut()" class="customZoomControl customZoomControl-out">-</a>
+</div>
+<a id="freezeMap" ng-click="map.freeze()" class="map-element" href="#map">Karte<br>einfrieren</a>
+
+<div class="drawToolbarDiv">
+	<div id="drawTitle" class="drawToolbar">Zeichnen</div>
+	<a id="drawRectangle" ng-click="map.draw('rectangle')" class="drawToolbar" href="#map"></a>
+	<a id="drawPolygon" ng-click="map.draw('polygon')" class="drawToolbar" href="#map"></a>
+	<a id="drawLine" ng-click="map.draw('polyline')" class="drawToolbar" href="#map"></a>
+	<a id="drawCircle" ng-click="map.draw('circle')" class="drawToolbar" href="#map"></a>
+	<a id="drawPoint" ng-click="map.draw('marker')" class="drawToolbar" href="#map"></a>
+</div>
+
+
+<a id="datasets" ng-click="map.showDatasets()" class="map-element" href="#map">Datensätze</a>
+
+<!-- add the fields of the "takische Arbeitstafel" -->
+<div ng-repeat="field in fields.fieldOrder.properties">
+  <div ng-attr-id="{{field.id}}" class="fields" ng-class="field.group" ng-style="{'top':field.top, 'left':field.left }" ng-click="fields.register(field.id)" ondrop="drop(event)" ondragover="allowDrop(event)">
+  	  <div ng-attr-id="fieldTextTop{{field.id}}" class="fieldText fieldTextTop"></div>
+  	  <div ng-attr-id="fieldTextBottom{{field.id}}" class="fieldText fieldTextBottom"></div>
+      <svg ng-attr-id="image{{field.id}}" ng-style="{'width': fields.fieldOrder.size,'height': fields.fieldOrder.size}"><polygon points="2,2 88,2 88,88 2,88 2,2 2,22.5 88,22.5 88,67.5 2,67.5"/></svg>
+  </div>
+</div>
+
+<div id="sideContent">
+  <div ng-include="sideContent.template"></div>
+</div>

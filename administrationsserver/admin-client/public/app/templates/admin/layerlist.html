@@ -1,0 +1,30 @@
+      <div class="starter-template">
+        <h1>&Uuml;bersicht der eingetragenen Datensätze</h1>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Layername</th>
+                <th>URL</th>
+                <th>Typ</th>
+                <!--th>zuletzt aktualisiert</th>
+                <th>automatisch aktualisieren</th-->
+                <th>bearbeiten</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="layer in layers">
+                <td>{{layer.name}}</td>
+                <td>{{layer.url}}</td>
+                <td>{{layer.type}}</td>
+                <!--td>{{layer.lastUpdate | date :'dd.MM.yy'}}</td>
+                <th ng-bind-html="boolIcon(layer.autoUpdate)"></th-->
+                <th><a href="#/layers/{{layer._id}}/edit" class="btn btn-default">bearbeiten</a></th>
+              </tr>
+            </tbody>
+          </table>
+          <a href="#/datasets/new" class="btn btn-default">Neuen Datensatz hinzufügen</a>
+        </div>
+      <div>

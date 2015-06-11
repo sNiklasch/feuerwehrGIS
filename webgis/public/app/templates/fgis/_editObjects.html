@@ -1,0 +1,18 @@
+<style type="text/css">
+	ul { 
+		list-style: none outside none;
+	}
+	li {
+		margin: 0 2px;
+		display: inline;
+	}
+</style>
+
+<div style="margin: 10px;">
+	<h1 ng-bind="sideContent.textvar"></h1>
+
+	<li>
+		<button ng-click="map.editSave()">Speichern</button>
+		<button ng-click="map.editCancel()">Abbrechen</button>
+	</li>
+</div>

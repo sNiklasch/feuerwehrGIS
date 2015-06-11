@@ -1,0 +1,46 @@
+<style type="text/css">
+	ul { 
+		list-style: none outside none;
+		margin:10px 0;
+		padding: 0;
+		text-align: center;
+	}
+	li {
+		margin: 0 2px;
+		display: inline;
+	}
+</style>
+
+<div style="margin: 10px;">
+	<h1>Bitte ausw&auml;hlen:</h1>
+	<div>Taktische Symbole
+	</div>
+	<input type="text" placeholder="Filter" ng-model="fields.symbolsFilter"></input>
+	<button ng-click="fields.fiterSymbols('')">Filter l&ouml;schen</button>
+	<ul id="filter" style="text-align: left;">
+		<li ng-repeat="category in fields.symbols.categories" ng-click="">
+			<button ng-click="fields.fiterSymbols(category.keyword)">{{category.name}}</button>
+		</li>
+	</ul>
+	<ul id="symbols" style="height: 250px; overflow: scroll;">
+		<li ng-repeat="symbol in fields.symbols.symbols | filter:fields.symbolsFilter" ng-click="">
+			<img ng-click="fields.addSymbol(symbol.name)" style="height:80px; background-color: white;" ng-src="images/symbols/{{symbol.name}}.svg" ng-title="{{symbol.name}}" alt="Description" />
+		</li>
+	</ul>
+	Zum setzen des Ortes in die Karte klicken
+	<button ng-click="fields.deleteLine()">Ort l&ouml;schen</button>
+	<br>
+	<ul>
+		<li>
+			<input ng-model="fields.currentField.fieldTextTop" class="fieldText" type="text" placeholder="Text eingeben">
+			<input ng-model="fields.currentField.fieldTextBottom" class="fieldText" style="margin-top: 121px;" type="text" placeholder="Text eingeben">
+			<img ng-src="{{fields.currentField.image}}" style="height:150px; background-color: white; text-align: center;" />
+			<br>
+		</li>
+		<li>
+			<button ng-click="fields.submit()">Bestätigen</button>
+			<button ng-click="fields.cancel()">Abbrechen</button>
+			<button ng-click="fields.delete()">Löschen</button>
+		</li>
+	</ul>
+</div>

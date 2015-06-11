@@ -1,0 +1,32 @@
+<!--div class="col-md-12">
+	Bitte wählen Sie den zu speichernden Bereich (Rechteck zeichnen) für den WMS aus, oder geben Sie die Daten manuell ein:<br><br>
+</div-->
+<div id="datamap" class="map col-md-12"></div>
+
+<!--form class="col-md-12" ng-submit="WMS.step3()">
+  <div class="form-group">
+    <label class="col-md-1">Bereich</label>
+    <div class="input-group col-md-11">
+      <span class="input-group-addon" id="bb-xmin-label">X-Min:</span>
+      <input type="number" class="form-control" id="bbox-xmin" ng-change="updateBbox('min')" ng-model="WMS.options.bbox.xmin" aria-describedby="bbox-xmin-label">
+
+      <span class="input-group-addon" id="bb-xmax-label">X-Max:</span>
+      <input type="number" class="form-control" id="bbox-xmax" ng-change="updateBbox('max')" ng-model="WMS.options.bbox.xmax" aria-describedby="bbox-xmax-label">
+
+      <span class="input-group-addon" id="bb-ymin-label">Y-Min:</span>
+      <input type="number" class="form-control" id="bbox-ymin" ng-change="updateBbox('min')" ng-model="WMS.options.bbox.ymin" aria-describedby="bbox-ymin-label">
+
+      <span class="input-group-addon" id="bb-ymax-label">Y-Max:</span>
+      <input type="number" class="form-control" id="bbox-ymax" ng-change="updateBbox('max')" ng-model="WMS.options.bbox.ymax" aria-describedby="bbox-ymax-label">
+    </div>
+  </div>
+</form>
+<div class="col-md-12">
+  <button ng-click="WMS.step3()" class="btn btn-success">weiter</button>
+</div-->
+
+<div class="col-md-12">
+  <button ng-click="GeoJSON.submit()" class="btn btn-success col-md-12">Datensatz importieren</button>
+</div>
+
+<script type="text/javascript" src="js/dataPreview.js"></script>

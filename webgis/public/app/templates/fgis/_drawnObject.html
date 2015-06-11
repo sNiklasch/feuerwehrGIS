@@ -1,0 +1,22 @@
+<style type="text/css">
+	ul { 
+		list-style: none outside none;
+	}
+	li {
+		margin: 0 2px;
+		display: inline;
+	}
+</style>
+
+<div style="margin: 10px;">
+	<h1>Objektinformationen</h1>
+
+	<div ng-bind="map.objects.type"></div>
+	<div ng-bind-html="map.objects.measureString"></div>
+	<br>
+	<li>
+		<button ng-click="map.editObjects()">Objekte bearbeiten</button>
+		<button ng-click="map.deleteObjects()">Objekte löschen</button>
+		<button ng-click="sideContent.close()">Schließen</button>
+	</li>
+</div>

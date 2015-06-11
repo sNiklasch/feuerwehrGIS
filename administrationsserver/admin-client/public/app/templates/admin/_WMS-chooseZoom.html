@@ -1,0 +1,27 @@
+
+<div class="col-md-6">
+	Bitte wählen sie die kleinste Zoomstufe für den WMS-Download (gr&ouml;&szlig;te &uuml;bersicht):
+	<div id="map1" class="map col-md-12"></div>
+</div>
+<div class="col-md-6">
+	Bitte wählen sie die gr&ouml;&szlig;te Zoomstufe für den WMS-Download (am mei&szlig;ten Detail):
+	<div id="map2" class="map col-md-12"></div>
+</div>
+<form class="col-md-12" ng-submit="WMS.step4()">
+  <div class="form-group">
+    <label class="col-md-1">Zoom</label>
+    <div class="input-group col-md-3">
+      <span class="input-group-addon" id="zoom-min-label">Min:</span>
+      <input type="number" class="form-control" id="zoom-min" ng-change="updateZoom()" ng-model="WMS.options.zoom.min" aria-describedby="zoom-min-label">
+
+      <span class="input-group-addon" id="zoom-max-label">Max:</span>
+      <input type="number" class="form-control" id="zoom-max" ng-change="updateZoom()" ng-model="WMS.options.zoom.max" aria-describedby="zoom-max-label">
+    </div>
+  </div>
+</form>
+<div class="col-md-12">
+  Voraussichtliche gesamtgröße des Datensatzes: zwischen {{WMS.fileSizeMax}} MB (für Farbbilder wie z.B. Orthofotos) und {{WMS.fileSizeMin}} MB (für schwarz/weiß-Bilder wie z.B. Topographische karten)
+</div>
+<div class="col-md-12">
+  <button ng-click="WMS.step4()" class="btn btn-success col-md-12">Datensatz importieren</button>
+</div>

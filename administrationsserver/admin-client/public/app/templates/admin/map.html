@@ -1,0 +1,60 @@
+
+<div id="map"></div>
+<script type="text/javascript">
+	var map = L.map('map').setView([51.505, -0.09], 13);
+	L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+	    maxZoom: 18
+	}).addTo(map);
+
+	// Initialise the FeatureGroup to store editable layers
+	var drawnItems = new L.FeatureGroup();
+	map.addLayer(drawnItems);
+
+	//options for the drawing
+	var options = {
+	    position: 'topright',
+	    draw: {
+	        polyline: false,
+	        polygon: false,
+	        circle: false,
+	        rectangle: {
+	            shapeOptions: {
+	                clickable: true
+	            }
+	        },
+	        marker: false
+	    },
+	    edit: {
+	        featureGroup: drawnItems, //REQUIRED!!
+	        edit: false,
+	        remove: false
+	    }
+	};
+
+	// Initialise the draw control and pass it the FeatureGroup of editable layers
+	var drawControl = new L.Control.Draw(options);
+	map.addControl(drawControl);
+
+	var rectangleLayer;
+
+	map.on('draw:created', function (e) {
+    var type = e.layerType;
+    rectangleLayer = e.layer;
+
+    if (type === 'marker') {
+        // Do marker specific actions
+    }
+
+    console.log(drawnItems);
+
+    // Do whatever else you need to. (save to db, add to map etc)
+    map.addLayer(rectangleLayer);
+	});
+
+	map.on('draw:drawstart', function (e) {
+		try {
+			map.removeLayer(rectangleLayer);
+		} catch(e){}
+	});
+</script>

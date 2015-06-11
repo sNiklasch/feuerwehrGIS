@@ -1,0 +1,48 @@
+<div class="control-group">
+	<label class="control-label" for="name">Layername</label>
+	<div class="controls">
+		<input id="name" name="name" type="text" placeholder="" class="input-xlarge" ng-model="layer.name">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="url">Url</label>
+	<div class="controls">
+		<input id="url" name="url" type="text" placeholder="" class="input-xlarge" ng-model="layer.url">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="info">info</label>
+	<div class="controls">
+		<input id="info" name="info" type="text" placeholder="" class="input-xlarge" ng-model="layer.info">
+	</div>
+</div>
+
+<div class="control-group">
+	<label class="control-label" for="typ">Typ</label>
+	<div class="controls">
+		<select class="form-control" id="typ" class="input-xlarge" ng-model="layer.type">
+		        <option>WMS</option>
+		        <option>CSV</option>
+		        <option>GeoJSON</option>
+		        <option>Shapefile</option>
+		      </select>
+	</div>
+</div>
+
+<div class="control-group">
+	<div class="controls">
+		<label class="checkbox" for="autoUpdate">
+			automatisch aktualisieren
+		</label>	
+		<input type="checkbox" name="autoUpdate" id="autoUpdate" ng-model="layer.autoUpdate">
+	</div>
+</div>
+
+<!-- Button -->
+<div class="control-group">
+	<div class="controls">
+		<input type="submit" class="btn btn-primary" value="Speichern"/>
+	</div>
+</div>

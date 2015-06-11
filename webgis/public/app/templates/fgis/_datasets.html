@@ -1,0 +1,9 @@
+<h1>Datensätze</h1>
+<h2>Basiskarten</h2>
+<div ng-repeat="basemap in map.datasets.basemaps" class="radio">
+  <label><input type="radio" ng-click="map.showBasemap(basemap.name)" name="optradio">{{basemap.name}}</label>
+</div>
+<h2>Fachkarten</h2>
+<div ng-repeat="fachkarte in map.datasets.fachkarten" class="checkbox">
+  <label><input type="checkbox" ng-click="map.showFachkarte($index)" name="optradio">{{fachkarte.name}}</label>
+</div>

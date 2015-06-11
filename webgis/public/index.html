@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>FireGIS</title>
+
+    <!-- Leaflet Stylesheet-->
+    <link rel="stylesheet" href="lib/leaflet-0.7.3/leaflet.css" />
+    <link rel="stylesheet" href="lib/Leaflet.draw/dist/leaflet.draw.css">
+
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+
+</head>
+
+<body ng-app="fgis">
+
+    <div class="container" ng-view></div>
+
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+    <script src="lib/leaflet-0.7.3/leaflet.js"></script>
+    <script src="lib/Leaflet.draw/dist/leaflet.draw.js"></script>
+    <script src="lib/Leaflet.GeometryUtil/dist/leaflet.geometryutil.js"></script>
+    <script src="lib/angular/angular.min.js"></script>
+    <script src="lib/angular-route/angular-route.min.js"></script>
+    <script src="app/app.js"></script>
+    <script src="js/fields.json"></script>
+    <script src="js/drawLocal.js"></script>
+    <script src="images/symbols/symbols.json"></script>
+    <script src="app/controllers/MapController.js"></script>
+</body>
+</html>

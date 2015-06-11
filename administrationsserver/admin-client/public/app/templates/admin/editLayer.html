@@ -1,0 +1,9 @@
+<form class="form-horizontal" ng-submit="updateLayer()">
+	<fieldset>
+		<legend>Layer bearbeiten</legend>
+
+		<div ng-include="'/app/templates/admin/_layer-form.html'"></div>
+
+	</fieldset>
+</form>
+<button type="button" class="btn btn-danger" ng-click="deleteLayer()">Diesen Layer löschen</button>

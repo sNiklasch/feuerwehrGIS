@@ -1,0 +1,196 @@
+<legend>Datensatz hinzufügen</legend>
+<div class="panel-group" id="accordion">
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse1">
+	      	Datenquelle eingeben
+	      </button>
+	  </div>
+	  <div id="collapse1" class="panel-collapse collapse in">
+	    <div class="panel-body">
+			<div ng-show="show.chooseSource">
+				<label class="radio-inline">
+					<input type="radio" name="optradio" value="link" ng-model="source" ng-change="setSource()">
+					Von Link
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="optradio" value="file" ng-model="source" ng-change="setSource()">
+					Aus Datei
+				</label>
+
+				<!--Input für Links:-->
+				<div ng-show="showLinkInput">
+					<div class="input-group">
+						<div class="col-sm-4">
+							<input type="text" class="form-control" placeholder="Name des Datensatzes hier eingeben..." ng-model="datasetInfo.name">
+						</div>	
+						<div class="col-sm-8">
+							<input type="text" class="form-control" placeholder="Link zum Datensatz hier eingeben..." ng-model="datasetInfo.url">
+						</div>
+						<span class="input-group-btn">
+							<button class="btn btn-default" type="submit" ng-click="submitLink()">
+								Absenden
+							</button>
+						</span>
+					</div>
+					<span class="col-sm-12">
+						Es werden folgende Datentypen unterstützt: WMS, GeoJSON, JSON, CSV
+					</span>
+				</div>
+
+				<!--Input für Dateien:-->
+				<div ng-show="showFileInput">ToDo: Fileupload</div>
+			</div>
+	    </div>
+	  </div>
+	</div>
+
+<!-- CSV Anfang -->
+	<div class="panel panel-default" ng-show="show.CSVDelimiter">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">CSV-Datei erkannt</button>
+	    </h4>
+	  </div>
+	  <div id="collapse2" class="panel-collapse collapse">
+	    <div class="panel-body">
+    		Es wurde eine CSV-Datei erkannt. Bitte geben Sie den Delimiter (das Trennzeichen ein):
+			  <div class="btn-group" role="group" aria-label="...">
+			  	<button type="button" ng-click="CSV.setDelimiter(';')" class="btn btn-default">;</button>
+			  	<button type="button" ng-click="CSV.setDelimiter(',')" class="btn btn-default">,</button>
+			  	<button type="button" ng-click="CSV.setDelimiter('|')" class="btn btn-default">|</button>
+			  	<div class="input-group lg-col-6">
+			      <input type="text" ng-model="CSV.delimiter" class="form-control" placeholder="andere">
+			      <span class="input-group-btn">
+			        <button class="btn btn-default" ng-click="CSV.step2()" type="button">Bestätigen</button>
+			      </span>
+			    </div><!-- /input-group -->
+			  </div>
+	    </div>
+	  </div>
+	</div>
+
+	<div class="panel panel-default" ng-show="show.CSVFields">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2a">Bitte Felder auswählen</button>
+	    </h4>
+	  </div>
+	  <div id="collapse2a" class="panel-collapse collapse">
+	    <div class="panel-body">
+    		Bitte wählen Sie die Felder für Länge und Breite aus:
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					Breite / Latitude: {{CSV.lat}}<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li ng-repeat="field in CSV.fields">
+						<a href="#/datasets/new" ng-click="CSV.setLat(field)">{{field}}</a>
+					</li>
+				</ul>
+			</div>
+			<div class="btn-group">
+				<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					Länge / Longitude: {{CSV.lon}}<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu" role="menu">
+					<li ng-repeat="field in CSV.fields">
+						<a href="#/datasets/new" ng-click="CSV.setLon(field)">{{field}}</a>
+					</li>
+				</ul>
+			</div>
+			<button class="btn btn-success" ng-click="CSV.saveData()">Bestätigen</button>
+			<button class="btn btn-warning">Daten haben keinen Raumbezug</button>
+			Bitte beachten Sie, dass aktuell nur Daten unterstützt werden, welche in WGS84 (EPSG 4326) vorliegen.
+	    </div>
+	  </div>
+	</div>
+<!-- CSV Ende -->
+
+
+<!-- Datenvorschau Start -->
+	<div class="panel panel-default" ng-show="show.DataPreview">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2b">Datenvorschau</button>
+	    </h4>
+	  </div>
+	  <div id="collapse2b" class="panel-collapse collapse">
+	    <div class="panel-body">
+    		<div ng-include="varWindow.GeoJSONtemplate"></div>
+	    </div>
+	  </div>
+	</div>
+<!-- Datenvorschau Ende -->
+
+<!-- WMS Anfang -->
+	<div class="panel panel-default" ng-show="show.WMSLayer">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse3">WMS ({{datasetInfo.name}}): Layer ausw&auml;hlen</button>
+	    </h4>
+	  </div>
+	  <div id="collapse3" class="panel-collapse collapse">
+	    <div class="panel-body">
+			<div ng-include="varWindow.WMStemplate1"></div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class="panel panel-default" ng-show="show.chooseArea">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse4">Bereich ausw&auml;hlen</button>
+	    </h4>
+	  </div>
+	  <div id="collapse4" class="panel-collapse collapse">
+	    <div class="panel-body">
+			<div ng-include="varWindow.WMStemplate2"></div>
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class="panel panel-default" ng-show="show.WMSZoom">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse5">Zoomstufen ausw&auml;hlen</button>
+	    </h4>
+	  </div>
+	  <div id="collapse5" class="panel-collapse collapse">
+	    <div class="panel-body">
+			<div ng-include="varWindow.WMStemplate3"></div>
+	    </div>
+	  </div>
+	</div>
+
+<!-- WMS Ende -->
+
+	<div class="panel panel-default" ng-show="show.dataPreview">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse6">Collapsible Group 1</button>
+	    </h4>
+	  </div>
+	  <div id="collapse6" class="panel-collapse collapse">
+	    <div class="panel-body">
+	    	vorschau textdaten
+	    </div>
+	  </div>
+	</div>
+
+
+	<div class="panel panel-default" ng-show="show.importData">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse7">Collapsible Group 1</button>
+	    </h4>
+	  </div>
+	  <div id="collapse7" class="panel-collapse collapse">
+	    <div class="panel-body">
+	    	Datensatz importieren
+	    </div>
+	  </div>
+	</div>
+</div> 
