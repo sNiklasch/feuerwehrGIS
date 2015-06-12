@@ -6,6 +6,7 @@ var http = require('http');
 var validator = require('validator');
 var parser = require('xml2json');
 var mongoose = require('mongoose');
+var rimraf = require('rimraf');
 var _ = require('underscore');
 var Layer = mongoose.model('Layer');
 
@@ -40,6 +41,15 @@ exports.put = function(request, response){
 
 exports.delete = function(request, response){
 	Layer.load(request.params.layerId, function(err, layer){
+		if(layer.type == "WMS"){
+			rimraf('layers/' + layer.name, function(err){
+				console.log(err);
+			});
+			//delete folder layers/layer.name
+		}
+		else if (layer.type == "GeoJSON"){
+			//delete db entry layer.info from geojson
+		}
 		try{
 			layer.remove(function(err){
 				response.jsonp(layer);

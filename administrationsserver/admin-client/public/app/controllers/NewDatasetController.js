@@ -97,13 +97,20 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.checkCSV = function(){
 		$scope.datasetInfo.type = "CSV";
 		//get string der quelle
+		$.get($scope.datasetInfo.url, function(data){
+			var _string = response;
+			$scope.CSV.step1(_string);
+		}).fail(function(response){
+    		console.log("error: bitt url überprüfen");
+    		$scope.invalidInput();
+        });/*
 		$http.get($scope.datasetInfo.url).success(function(response){
 			var _string = response;
 			$scope.CSV.step1(_string);
 		}).error(function(response){
     		console.log("error: bitt url überprüfen");
     		$scope.invalidInput();
-        });
+        });*/
 	}
 
 	//TODO
