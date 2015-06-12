@@ -209,6 +209,9 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 			map.boxZoom.enable();
 			map.keyboard.enable();
 			$("#map").css('cursor', '');
+			$("#freezeMapLock").css('display', 'none');
+			$("#freezeMap").css('color', 'black');
+			$(".customZoomControl").css('color', 'black');
 		}
 		else {
 			$scope.map.frozen = true;
@@ -219,6 +222,9 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 			map.boxZoom.disable();
 			map.keyboard.disable();
 			$("#map").css('cursor', 'default');
+			$("#freezeMapLock").css('display', 'block');
+			$("#freezeMap").css('color', 'grey');
+			$(".customZoomControl").css('color', '#ddd');
 		}
 	}
 

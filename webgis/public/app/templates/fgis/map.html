@@ -4,16 +4,39 @@
   <a href= "#map" ng-click="map.zoomIn()" class="customZoomControl customZoomControl-in">+</a>
   <a href= "#map" ng-click="map.zoomOut()" class="customZoomControl customZoomControl-out">-</a>
 </div>
-<a id="freezeMap" ng-click="map.freeze()" class="map-element" href="#map">Karte<br>einfrieren</a>
+<a id="freezeMap" ng-click="map.freeze()" class="map-element" href="#map">Karte
+  <img id="freezeMapLock" src="images/lock.png">
+  <br>
+  einfrieren</a>
 
-<div class="drawToolbarDiv">
-	<div id="drawTitle" class="drawToolbar">Zeichnen</div>
-	<a id="drawRectangle" ng-click="map.draw('rectangle')" class="drawToolbar" href="#map"></a>
-	<a id="drawPolygon" ng-click="map.draw('polygon')" class="drawToolbar" href="#map"></a>
-	<a id="drawLine" ng-click="map.draw('polyline')" class="drawToolbar" href="#map"></a>
-	<a id="drawCircle" ng-click="map.draw('circle')" class="drawToolbar" href="#map"></a>
-	<a id="drawPoint" ng-click="map.draw('marker')" class="drawToolbar" href="#map"></a>
-</div>
+<table class="drawToolbarDiv">
+  <tbody>
+    <tr>
+      <td colspan="6">
+        <div id="drawTitle" class="drawToolbar">Zeichnen</div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <a id="drawRectangle" ng-click="map.draw('rectangle')" class="drawToolbar" href="#map"></a>
+      </td>
+      <td colspan="2">
+        <a id="drawPolygon" ng-click="map.draw('polygon')" class="drawToolbar" href="#map"></a>
+      </td>
+      <td colspan="2">
+        <a id="drawLine" ng-click="map.draw('polyline')" class="drawToolbar" href="#map"></a>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">
+        <a id="drawCircle" ng-click="map.draw('circle')" class="drawToolbar" href="#map"></a>
+      </td>
+      <td colspan="3">
+        <a id="drawPoint" ng-click="map.draw('marker')" class="drawToolbar" href="#map"></a>
+      </td>
+    </tr>
+  </tbody>
+</table>
 
 
 <a id="datasets" ng-click="map.showDatasets()" class="map-element" href="#map">Datensätze</a>
