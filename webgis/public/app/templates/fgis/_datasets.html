@@ -1,7 +1,10 @@
 <h1>Datensätze</h1>
 <h2>Basiskarten</h2>
-<div ng-repeat="basemap in map.datasets.basemaps" class="radio">
-  <label><input type="radio" ng-click="map.showBasemap(basemap.name)" name="optradio">{{basemap.name}}</label>
+<div class="radio">
+	<label><input type="radio" ng-click="map.showDefaultBasemap()" name="optradio" checked>DTK Sammeldienst (Standard)</label>
+	<div ng-repeat="basemap in map.datasets.basemaps">
+	  <label><input type="radio" ng-click="map.showBasemap(basemap.name)" name="optradio">{{basemap.name}}</label>
+	</div>
 </div>
 <h2>Fachkarten</h2>
 <div ng-repeat="fachkarte in map.datasets.fachkarten" class="checkbox">

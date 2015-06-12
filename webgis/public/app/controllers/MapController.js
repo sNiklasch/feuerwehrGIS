@@ -31,15 +31,17 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 	$scope.fields.currentField.topText = "";
 	$scope.fields.currentField.bottomText = "";
 	$scope.fields.currentField.active = false;
-	$scope.fields.currentField.id = null;
+	$scope.fields.currentField.id = 11;
 	$scope.fields.currentField.fieldTextTop = "";
 	$scope.fields.currentField.fieldTextBottom = "";
 
 
 	//show the field-properies in the side-content
 	$scope.fields.register = function(field){
+		console.log($scope.fields.currentField.id);
+		$scope.fields.deleteLastLine($scope.fields.currentField.id);
+		var _template = "/app/templates/fgis/_fieldContent.html";
 		console.log($location.path());
-		$scope.sideContent.change("/app/templates/fgis/_fieldContent.html");
 		try{$scope.map.editCancel();}catch(e){}
 		var thisImage = document.getElementById(field).getElementsByTagName('img');
 		$scope.fields.currentField.id = field;
@@ -63,6 +65,7 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 			$scope.fields.currentField.fieldTextTop = document.getElementById('fieldTextTop'+field).innerHTML;
 			$scope.fields.currentField.fieldTextBottom = document.getElementById('fieldTextBottom'+field).innerHTML;
 		}
+		$scope.sideContent.change(_template);
 	}
 
 	//submit the field
@@ -150,9 +153,19 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 		var anchorPoint = getAnchorOfElement($scope.fields.currentField.id);
 		var anchor = map.containerPointToLatLng(anchorPoint);
 		var latlngs = [$scope.map.lastClick, anchor];
-		linesArray[$scope.fields.currentField.id] = [$scope.map.lastClick, anchorPoint];
-		console.log(linesArray);
-		lines.addLayer(L.polyline(latlngs));
+		if(linesArray[$scope.fields.currentField.id] == null){
+			linesArray[$scope.fields.currentField.id] = [$scope.map.lastClick, anchorPoint];
+			lines.addLayer(L.polyline(latlngs));
+		}
+	}
+
+	$scope.fields.deleteLastLine = function(oldId){
+		var _oldField = document.getElementById(oldId).innerHTML;
+		var _oldSplitted = _oldField.split("polygon");
+		if (_oldSplitted.length > 1){
+			linesArray[oldId] = null;
+			fitAllLines(linesArray);
+		}
 	}
 
 	/********************************
@@ -237,7 +250,12 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 	$scope.map.layers.alleFachkarten = null;
 
 	$scope.map.showDatasets = function(){
-		$scope.sideContent.change("/app/templates/fgis/_datasets.html");
+		if ($scope.sideContent.template == "/app/templates/fgis/_datasets.html"){
+			$scope.sideContent.change("");
+		}
+		else {
+			$scope.sideContent.change("/app/templates/fgis/_datasets.html");
+		}
 		try{$scope.map.editCancel();}catch(e){}
 		//TODO: datasets einblenden
 	}
@@ -269,6 +287,10 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 		var _basemap = L.tileLayer(_layerString);
 		basemap.clearLayers();
 		basemap.addLayer(_basemap);
+	}
+
+	$scope.map.showDefaultBasemap = function(){
+		basemap.clearLayers();
 	}
 
 	$scope.map.showFachkarte = function(id){
@@ -374,9 +396,15 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 			if (_area < 1000000){
 				_htmlString = "Fläche: " 
 								+ (Math.floor(_area))
-								+ "m<sup>2</sup><br>";
+								+ "m<sup>2</sup><br>"
+								+ " / "
+								+ (Math.floor(_area/100)/100)
+								+ "ha";
 			} else {
 				_htmlString = "Fläche: "
+								+ (Math.floor(_area/100)/100)
+								+ "ha"
+								+ " / "
 								+ (Math.floor(_area/10000)/100)
 								+ "km<sup>2</sup><br>";
 			}
@@ -427,7 +455,7 @@ function initMap(){
 	    format: 'image/png',
 	    transparent: false
 	});
-	_osmmap.addTo(map);
+	_wmsLayer.addTo(map);
 
 	lines = L.layerGroup().addTo(map);
 	fachkarten = L.layerGroup().addTo(map);
