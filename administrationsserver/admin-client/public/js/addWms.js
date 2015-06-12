@@ -120,6 +120,8 @@ function updateZoom(min, max){
 	scope.$apply(function(){
 		scope.WMS.options.zoom.min = min;
 		scope.WMS.options.zoom.max = max;
+		scope.WMS.fileSizeMin = estimateFilesize(scope.WMS.options)[0];
+		scope.WMS.fileSizeMax = estimateFilesize(scope.WMS.options)[1];
 	});
 }
 

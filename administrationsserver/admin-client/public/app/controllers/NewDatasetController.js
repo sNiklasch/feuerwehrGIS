@@ -265,6 +265,18 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.WMS.fileSizeMin = 0;
 	$scope.WMS.fileSizeMax = 0;
 
+	$scope.WMS.options = {
+		"name": "",
+		"url": "",
+		"bbox": {"xmin":7.5967, "xmax":7.6465, "ymin":51.9418, "ymax":51.9708},
+		"zoom": {
+			"min": 12,
+			"max": 14
+		},
+		"layer": "",
+		"EPSG": 4326
+	};
+
 	$scope.getWMSCapabilities = function(id, callback){
 		$scope.WMS.capabilities = "";
 		console.log(id);
@@ -306,6 +318,8 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 
 	//Schritt3: Zoomstufen auswaehlen
 	$scope.WMS.step3 = function(){
+		$scope.WMS.fileSizeMin = estimateFilesize($scope.WMS.options)[0];
+		$scope.WMS.fileSizeMax = estimateFilesize($scope.WMS.options)[1];
 		$scope.show.WMSZoom = true;
 		$("#collapse5").collapse({
 			parent: '#accordion'
@@ -334,18 +348,6 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 		$scope.downloadWms();
         window.location.href = '#';
 	}
-
-	$scope.WMS.options = {
-		"name": "",
-		"url": "",
-		"bbox": {"xmin":7.5967, "xmax":7.6465, "ymin":51.9418, "ymax":51.9708},
-		"zoom": {
-			"min": 12,
-			"max": 14
-		},
-		"layer": "",
-		"EPSG": 4326
-	};
 
 	$scope.getLayerNames = function(){
 		$scope.WMS.layers = new Array();
@@ -431,6 +433,7 @@ function estimateFilesize(options){
 	console.log("tiles: " + tiles);
 	var sizeMin = Math.floor(tiles * 20 / 1000); //ca. 20KB pro Tile minimum
 	var sizeMax = Math.floor(tiles * 170 / 1000); //ca. 170KB pro Tile maximum
+	console.log([sizeMin, sizeMax]);
 	return [sizeMin, sizeMax];
 }
 
