@@ -25,8 +25,8 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 
 	//attributes of the dataset:
 	$scope.datasetInfo = {};
-	$scope.datasetInfo.name = "GeoJSON";
-	$scope.datasetInfo.url = "http://niklasch.net/testData.csv";
+	$scope.datasetInfo.name = "";
+	$scope.datasetInfo.url = "";
 
 	//ENTER LINK OR FILE
 	$scope.source = "none";
