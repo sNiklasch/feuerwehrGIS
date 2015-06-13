@@ -41,7 +41,11 @@
 
 <a id="datasets" ng-click="map.showDatasets()" class="map-element" href="#map">Datensätze</a>
 
-<!-- add the fields of the "takische Arbeitstafel" -->
+<!-- add the elements of the "takische Arbeitstafel" -->
+<div id="titleRow">
+  Einsatzstichwort: <input type="text" class="titleRowInput"> Einsatzort: <input type="text" class="titleRowInput"> Meldender: <input type="text" class="titleRowInput"> Objektnr.: <input type="text" class="titleRowInput" style="width: 50px;"> Datum-Uhrzeitgruppe: <input type="text" class="titleRowInput">
+</div>
+
 <div ng-repeat="field in fields.fieldOrder.properties">
   <div ng-attr-id="{{field.id}}" class="fields" ng-class="field.group" ng-style="{'top':field.top, 'left':field.left }" ng-click="fields.register(field.id)" ondrop="drop(event)" ondragover="allowDrop(event)">
   	  <div ng-attr-id="fieldTextTop{{field.id}}" class="fieldText fieldTextTop"></div>

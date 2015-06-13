@@ -8,9 +8,9 @@ html, body {
 
 #sideContent {
 	position: absolute;
-	height: 100%;
+	height: calc(100% - 30px);
 	width: calc(100% - 980px);
-	top: 0;
+	bottom: 0;
 	right: 0;
 	background-color: #333333;
 	color: white;
@@ -18,10 +18,24 @@ html, body {
 }
 
 #map{
-	top: 90px;
+	top: 120px;
 	left: 90px;
 	height: 566px;
 	width: 800px;
+}
+
+#titleRow{
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 16px;
+	width: 100%;
+	padding: 5px;
+	border: 2px solid #7F7F7F;
+}
+
+.titleRowInput {
+	width: 150px;
 }
 
 .fields {
@@ -36,11 +50,11 @@ html, body {
 
 .toprow{
 	position: absolute;
-	top: 0;
+	top: 30px;
 }
 .bottomrow{
 	position: absolute;
-	top: 656px;
+	top: 686px;
 }
 .leftcol{
 	position: absolute;
@@ -72,12 +86,12 @@ html, body {
 	padding: 5px;
 	position: absolute;
 	background-color: #fff;
-	border-radius: 4px;
+    border: 1px solid black;
 }
 
 .customZoomControl-pane {
 	position: absolute;
-	top: 5px;
+	top: 35px;
 	left: 15px;
 	box-shadow: 0 1px 5px rgba(0,0,0,0.65);
 	line-height: 26px;
@@ -97,27 +111,23 @@ html, body {
 	text-decoration: none;
 	color: black;
 	border: 0;
+    border: 1px solid black;
 }
 
 .customZoomControl-out{
 	left: 30px;
-	border-top-right-radius: 4px;
-	border-bottom-right-radius: 4px;
-	border-left: 1px solid #ccc;
 }
 .customZoomControl-in{
 	left: 0px;
-	border-top-left-radius: 4px;
-	border-bottom-left-radius: 4px;
-	border-right: 1px solid #ccc;
 }
 
 #freezeMap{
-	top: 40px;
-	left: 10px;
+	top: 70px;
 	text-decoration: none;
 	font-size: 14px;
 	color: black;
+	width: 78px;
+	padding-left: 8px;
 }
 
 #freezeMapLock{
@@ -129,7 +139,7 @@ html, body {
 }
 
 #datasets{
-	top: 25px;
+	top: 55px;
 	left: 890px;
 	text-decoration: none;
 	font-size: 14px;
@@ -151,7 +161,7 @@ html, body {
 .drawToolbarDiv{
 	position: absolute;
 	z-index: 2;
-	top: 656px;
+	top: 686px;
 	left: 0px;
 	max-height: 90px;
 	width: 90px;
