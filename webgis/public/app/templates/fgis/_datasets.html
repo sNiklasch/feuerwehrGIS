@@ -10,3 +10,7 @@
 <div ng-repeat="fachkarte in map.datasets.fachkarten" class="checkbox">
   <label><input type="checkbox" ng-click="map.showFachkarte($index)" name="optradio">{{fachkarte.name}}</label>
 </div>
+<h2>Daten ohne Raumbezug</h2>
+<div ng-repeat="nonspatial in map.datasets.nonspatial">
+  <a href="#/map" style="text-decoration: none; color: white;" ng-click="map.showNonspatial($index)" name="nonspatial">{{nonspatial.name}}</a>
+</div>

@@ -1,4 +1,4 @@
-var app = angular.module("fgis", ["ngRoute"]);
+var app = angular.module("fgis", ["ngRoute", "jsonFormatter"]);
 
 app.config(function($routeProvider){
 	$routeProvider

@@ -112,7 +112,7 @@
 				</ul>
 			</div>
 			<button class="btn btn-success" ng-click="CSV.saveData()">Bestätigen</button>
-			<button class="btn btn-warning">Daten haben keinen Raumbezug</button>
+			<button class="btn btn-warning" ng-click="CSV.notSpatial()">Daten haben keinen Raumbezug</button>
 			Bitte beachten Sie, dass aktuell nur Daten unterstützt werden, welche in WGS84 (EPSG 4326) vorliegen.
 	    </div>
 	  </div>
@@ -134,6 +134,27 @@
 	  </div>
 	</div>
 <!-- Datenvorschau Ende -->
+
+
+<!-- Datenvorschau JSON Start -->
+	<div class="panel panel-default" id="JSONpreviewPanel" ng-show="show.DataPreviewJSON">
+	  <div class="panel-heading">
+	    <h4 class="panel-title">
+	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2c">Datenvorschau</button>
+	    </h4>
+	  </div>
+	  <div id="collapse2c" class="panel-collapse collapse">
+	    <div class="panel-body">
+    		<div id="jsonFormatterDiv"></div>
+    		<json-formatter open="2" json='datasetInfo.info'></json-formatter>
+    		<div class="col-md-12">
+			  <button ng-click="JSON.submit()" class="btn btn-success col-md-12">Datensatz importieren</button>
+			</div>
+	    </div>
+	  </div>
+	</div>
+<!-- Datenvorschau JSON Ende -->
+
 
 <!-- WMS Anfang -->
 	<div class="panel panel-default" ng-show="show.WMSLayer">

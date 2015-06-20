@@ -1,4 +1,4 @@
-var app = angular.module("admin", ["ngRoute"]);
+var app = angular.module("admin", ["ngRoute", "jsonFormatter"]);
 
 app.config(['$httpProvider', function($httpProvider) {
         $httpProvider.defaults.useXDomain = true;

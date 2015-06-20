@@ -244,6 +244,8 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 	$scope.map.datasets = {};
 	$scope.map.datasets.basemaps = new Array();
 	$scope.map.datasets.fachkarten = new Array();
+	$scope.map.datasets.nonspatial = new Array();
+	$scope.map.datasets.nonspatial.current = "";
 	$scope.map.layers = {};
 	$scope.map.layers.fachkartenIds = new Array();
 	$scope.map.layers.alleFachkarten = null;
@@ -265,9 +267,12 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 				for (var i = response.length - 1; i >= 0; i--) {
 					if (response[i].type == "WMS"){
 						$scope.map.datasets.basemaps.push(response[i]);
-					} else {
+					} else if (response[i].type == "GeoJSON") {
 						$scope.map.datasets.fachkarten.push(response[i]);
 						$scope.map.datasets.fachkarten[$scope.map.datasets.fachkarten.length-1].visible = false;
+					} else if (response[i].type == "CSV") {
+						$scope.map.datasets.nonspatial.push(response[i]);
+						console.log(response[i]);
 					}
 				};
 			}).error(function(response){});
@@ -302,6 +307,13 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 		}
 		console.log($scope.map.layers.fachkartenIds);
 		redrawFachkarten($scope.map.layers);
+	}
+
+	$scope.map.showNonspatial = function(id){
+		$scope.map.datasets.nonspatial.current = $scope.map.datasets.nonspatial[id].info;
+		var _template = "/app/templates/fgis/_nonspatial.html";
+		try{$scope.map.editCancel();}catch(e){}
+		$scope.sideContent.change(_template);
 	}
 
 	$scope.map.initDatasets();

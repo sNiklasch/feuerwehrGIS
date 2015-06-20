@@ -20,6 +20,7 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.show.WMSLayer = false;
 	$scope.show.chooseArea = false;
 	$scope.show.dataPreview = false;
+	$scope.show.dataPreviewJSON = false;
 	$scope.show.WMSZoom = false;
 	$scope.show.importData = false;
 
@@ -97,7 +98,6 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 		}
 	}
 
-	//TODO
 	$scope.checkCSV = function(){
 		$scope.datasetInfo.type = "CSV";
 		//get string der quelle
@@ -117,7 +117,6 @@ app.controller("NewDatasetController", function($scope, $http, $location){
         });*/
 	}
 
-	//TODO
 	$scope.checkGeoJSON = function(){
 		console.log("check geojson");
 		$scope.datasetInfo.type = "GeoJSON";
@@ -146,9 +145,15 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	}
 
 	//TODO
-	$scope.checkJSON = function(string){
-		console.log("check JSON");
-		$scope.datasetInfo.type = "JSON";
+	$scope.checkJSON = function(){
+		$.get($scope.datasetInfo.url, function(response){
+			var _string = response;
+			$scope.JSON.dataPreview(_string);
+			$scope.datasetInfo.type = "JSON";
+		}).fail(function(response){
+    		console.log("error: bitt url überprüfen");
+    		$scope.invalidInput();
+        });
 		
 	}
 
@@ -231,6 +236,34 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 			});
     }
 
+    $scope.CSV.notSpatial = function(){
+    	$scope.CSV.toJSON();
+    }
+
+    $scope.CSV.toJSON = function(){
+		var lines = $scope.CSV.string.split("\n");
+
+		var result = [];
+
+		var headers=lines[0].split($scope.CSV.delimiter);
+
+		for(var i = 1; i < lines.length;i++){
+
+			var obj = {};
+			var currentline=lines[i].split($scope.CSV.delimiter);
+
+			for(var j=0;j<headers.length;j++){
+				obj[headers[j]] = currentline[j];
+			}
+
+			result.push(obj);
+
+		}
+
+		//return result; //JavaScript object
+		$scope.JSON.dataPreview(JSON.parse(JSON.stringify(result))); //JSON
+    }
+
 	/***********************************************
 	******************* GeoJSON:********************
 	************************************************/
@@ -241,7 +274,6 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 		console.log("geojson preview");
 		$scope.datasetInfo.info = geojson._id;
 		console.log($scope.datasetInfo);
-		//TODO: GeoJSON visuelle rückmeldung
 		$scope.show.DataPreview = true;
 		$("#collapse2b").collapse({
 			parent: '#accordion',
@@ -259,10 +291,34 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.GeoJSON.submit = function(){
 		console.log($scope.datasetInfo);
 		$http.post($scope.url + "layers", $scope.datasetInfo)
-            .success(function(response){});
-        window.location.href = '#';
+            .success(function(response){
+            	window.location.href = '#';
+            });
 	}
 
+	/***********************************************
+	********************* JSON: ********************
+	************************************************/
+
+	$scope.JSON = {};
+
+	$scope.JSON.dataPreview = function(json){
+		$scope.datasetInfo.info = json;
+		console.log($scope.datasetInfo.info);
+		document.getElementById("JSONpreviewPanel").className = "panel panel-default";
+		$("#collapse2c").collapse({
+			parent: '#accordion',
+			toggle: true
+		});
+		$scope.show.DataPreviewJSON = true;
+	}
+
+	$scope.JSON.submit = function(){
+		$http.post($scope.url + "layers", $scope.datasetInfo)
+            .success(function(response){
+            	window.location.href = '#';
+            });
+	}
 
 	/***********************************************
 	********************* WMS:**********************
@@ -444,7 +500,7 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 
 			_reader.onload = function(e){
 				_content = e.target.result;
-				console.log(_ending + ": " + _content);
+				console.log(_content);
 
 				if(_ending == "csv"){
 					$scope.datasetInfo.type = "CSV";
@@ -468,6 +524,10 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 				            	}
 				            });
 		            }
+				}
+				else if(_ending == "json"){
+					_content = JSON.parse(_content);
+					$scope.JSON.dataPreview(_content);
 				}
 			}
 
