@@ -38,10 +38,8 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 
 	//show the field-properies in the side-content
 	$scope.fields.register = function(field){
-		console.log($scope.fields.currentField.id);
 		$scope.fields.deleteLastLine($scope.fields.currentField.id);
 		var _template = "/app/templates/fgis/_fieldContent.html";
-		console.log($location.path());
 		try{$scope.map.editCancel();}catch(e){}
 		var thisImage = document.getElementById(field).getElementsByTagName('img');
 		$scope.fields.currentField.id = field;
@@ -103,6 +101,7 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 	$scope.fields.cancel = function(){
 		$scope.sideContent.close();
 		$scope.fields.currentField.active = false;
+		$scope.fields.deleteLastLine($scope.fields.currentField.id);
 	}
 
 	$scope.fields.delete = function(){
@@ -314,6 +313,7 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 	$scope.map.currentEdit = "";
 
 	$scope.map.draw = function(type){
+		$scope.fields.cancel();
 		var _className = 'leaflet-draw-draw-' + type;
 		var _element = document.getElementsByClassName(_className);
 		_element[0].click();
@@ -324,7 +324,7 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 		$scope.map.currentEdit = "leaflet-draw-actions leaflet-draw-actions-bottom";
 		var _element = document.getElementsByClassName("leaflet-draw-edit-remove");
 		_element[0].click();
-		$scope.sideContent.textvar = "Objekte löschen";
+		$scope.sideContent.textvar = "Die zu löschenden Objekte bitte anklicken";
 		$scope.sideContent.change("/app/templates/fgis/_editObjects.html");
 	}
 
@@ -427,17 +427,21 @@ app.controller("MapController", function($scope, $http, $sce, $location){
 
 
 function getAnchorOfElement(elementId){
-	var $this = $("#"+elementId);
-	var offset = $this.offset();
-	var width = $this.width();
-	var height = $this.height();
+	var _this = $("#"+elementId);
+	var offset = _this.offset();
+	var width = _this.width();
+	var height = _this.height();
+	console.log(_this);
+	console.log(offset);
+	console.log(width);
+	console.log(height);
 
 	var centerX = offset.left + width / 2;
 	var centerY = offset.top + height / 2;
-	if (centerX < 80) {return [0, centerY-80]}
-	else if (centerX > 880) {return [800, centerY-80]}
-	else if (centerY < 80) {return [centerX-80, 0]}
-	else if (centerY > 680) {return [centerX-80, 600]}
+	if (centerX < 80) {return [2, centerY-120]}
+	else if (centerX > 880) {return [798, centerY-120]}
+	else if (centerY < 80) {return [centerX-90, 2]}
+	else if (centerY > 680) {return [centerX-90, 564]}
 }
 
 /****************************************
@@ -448,6 +452,11 @@ function initMap(){
 	map = L.map('map', {
 		zoomControl: true
 	}).setView([51.95, 7.6], 13);
+	L.control.scale({
+		position: 'bottomright',
+		metric: true,
+		imperial: false
+		}).addTo(map);
 
 	var _osmmap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 	var _wmsLayer = L.tileLayer.wms("http://www.wms.nrw.de/geobasis/wms_nw_dtk", {
@@ -467,18 +476,18 @@ function initMap(){
 	var options = {
 	    position: 'topright',
 	    draw: {
-	        polyline: {shapeOptions: {color: '#0000ff'}},
+	        polyline: {shapeOptions: {color: '#ff0000'}},
 	        polygon: {
 	            allowIntersection: true,
-	            shapeOptions: {color: '#0000ff'},
+	            shapeOptions: {color: '#ff0000'},
 	            showArea: true
 	        },
 	        rectangle: {shapeOptions: {
 	        	clickable: true,
-	        	color: '#0000ff'
+	        	color: '#ff0000'
 	        }},
 	        marker: {},
-	        circle: {shapeOptions: {color: '#0000ff'}}
+	        circle: {shapeOptions: {color: '#ff0000'}}
 	    },
 	    edit: {
 	        featureGroup: drawnItems, //REQUIRED!!

@@ -22,7 +22,7 @@
 			<button ng-click="fields.fiterSymbols(category.keyword)">{{category.name}}</button>
 		</li>
 	</ul>
-	<ul id="symbols" style="height: 250px; overflow: scroll;">
+	<ul id="symbols" style="height: 240px; overflow: scroll;">
 		<li ng-repeat="symbol in fields.symbols.symbols | filter:fields.symbolsFilter" ng-click="">
 			<img ng-click="fields.addSymbol(symbol.name)" style="height:80px; background-color: white;" ng-src="images/symbols/{{symbol.name}}.svg" ng-title="{{symbol.name}}" alt="Description" />
 		</li>
