@@ -45,6 +45,10 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 		console.log($scope.source);
 	}
 
+	/***********************************************
+	********************* Link:*********************
+	************************************************/
+
 	//Funktion für den Absenden-Button in Schritt 1 (Link)
 	$scope.submitLink = function(){
 		console.log("Es wird folgender Link ueberprueft: " + $scope.datasetInfo.url);
@@ -97,7 +101,7 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.checkCSV = function(){
 		$scope.datasetInfo.type = "CSV";
 		//get string der quelle
-		$.get($scope.datasetInfo.url, function(data){
+		$.get($scope.datasetInfo.url, function(response){
 			var _string = response;
 			$scope.CSV.step1(_string);
 		}).fail(function(response){
@@ -162,9 +166,11 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.CSV.fields = ["lat", "lon", "pi", "de"];
 
 	$scope.CSV.step1 = function(string){
+		console.log("CSV");
 		//choose delimiter
 		$scope.CSV.string = string;
 		$scope.show.CSVDelimiter = true;
+		document.getElementById("CSVdelimiterPanel").className = "panel panel-default";
 		$("#collapse2").collapse({
 			parent: '#accordion',
 			toggle: true
@@ -232,6 +238,7 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 	$scope.GeoJSON = {};
 
 	$scope.GeoJSON.dataPreview = function(geojson){
+		console.log("geojson preview");
 		$scope.datasetInfo.info = geojson._id;
 		console.log($scope.datasetInfo);
 		//TODO: GeoJSON visuelle rückmeldung
@@ -419,6 +426,57 @@ app.controller("NewDatasetController", function($scope, $http, $location){
 		$scope.WMS.fileSizeMin = estimateFilesize($scope.WMS.options)[0];
 		$scope.WMS.fileSizeMax = estimateFilesize($scope.WMS.options)[1];
 	};
+
+	/***********************************************
+	******************** File:**********************
+	************************************************/
+
+	$scope.handleFileUpload = function(evt){
+		var _file = evt.target.files;
+
+		if (_file.length == 1){
+			var _filenameparts = _file[0].name.split(".");
+			var _ending = _filenameparts[_filenameparts.length-1];
+			var _content = "";
+
+			var _reader = new FileReader();
+			_reader.readAsText(_file[0], "UTF-8");
+
+			_reader.onload = function(e){
+				_content = e.target.result;
+				console.log(_ending + ": " + _content);
+
+				if(_ending == "csv"){
+					$scope.datasetInfo.type = "CSV";
+					$scope.datasetInfo.url = "lokale Datei";
+					$scope.CSV.step1(_content);
+				}
+				else if(_ending == "geojson"){
+					_content = JSON.parse(_content);
+					$scope.datasetInfo.type = "GeoJSON";
+					if(_content.hasOwnProperty("type")){
+						$http.post($scope.url + "geojson", _content)
+				            .success(function(response){
+				            	if (response == false) {
+				            		//
+				            		console.log("not valid");
+				            		$scope.invalidInput();
+				            	} else {
+				            		console.log("valid");
+									$scope.datasetInfo.url = "lokale Datei";
+		            				$scope.GeoJSON.dataPreview(response);
+				            	}
+				            });
+		            }
+				}
+			}
+
+		}
+
+
+	}
+	document.getElementById('fileInput').addEventListener('change', $scope.handleFileUpload, false);
+	
 
 });
 

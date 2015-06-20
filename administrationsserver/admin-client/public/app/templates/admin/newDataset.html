@@ -41,14 +41,23 @@
 				</div>
 
 				<!--Input für Dateien:-->
-				<div ng-show="showFileInput">ToDo: Fileupload</div>
+				<div ng-show="showFileInput">
+					<form id="fileInput">
+						<div class="col-sm-4">
+							<input type="text" class="form-control" placeholder="Name des Datensatzes hier eingeben..." ng-model="datasetInfo.name">
+						</div>	
+						<div class="col-sm-8">
+							<input type="file" id="userPhotoInput" class="form-control">
+						</div>
+					</form>
+				</div>
 			</div>
 	    </div>
 	  </div>
 	</div>
 
 <!-- CSV Anfang -->
-	<div class="panel panel-default" ng-show="show.CSVDelimiter">
+	<div id="CSVdelimiterPanel" class="panel panel-default" ng-show="show.CSVDelimiter">
 	  <div class="panel-heading">
 	    <h4 class="panel-title">
 	      <button class="btn btn-link" style="text-decoration: none; color: black;" data-toggle="collapse" data-parent="#accordion" data-target="#collapse2">CSV-Datei erkannt</button>

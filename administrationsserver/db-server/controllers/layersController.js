@@ -2,9 +2,6 @@
 * mit der Datenbank über die route "layers.js" aufgerufen werden
 */
 require('../db-models/layer');
-var http = require('http');
-var validator = require('validator');
-var parser = require('xml2json');
 var mongoose = require('mongoose');
 var rimraf = require('rimraf');
 var _ = require('underscore');

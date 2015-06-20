@@ -1,5 +1,4 @@
 require('../db-models/geojson');
-var http = require('http');
 var GJV = require("geojson-validation");
 var csv2geojson = require('csv2geojson');
 //var validator = require('validator');
