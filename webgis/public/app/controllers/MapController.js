@@ -472,7 +472,7 @@ function initMap(){
 
 	var _osmmap = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png');
 	var _wmsLayer = L.tileLayer.wms("http://www.wms.nrw.de/geobasis/wms_nw_dtk", {
-	    layers: "nw_dtk_col",
+	    layers: "nw_dtk_pan",
 	    format: 'image/png',
 	    transparent: false
 	});
