@@ -8,7 +8,6 @@ var ip = require('ip');
 var layers = require('./routes/layers');
 var wms = require('./routes/wms');
 var geojson = require('./routes/geojson');
-//var json = require('./routes/json');
 
 var app = express();
 

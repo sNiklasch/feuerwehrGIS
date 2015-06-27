@@ -1,8 +1,0 @@
-MongoDB:
-	mongod --dbpath /Users/sebastianniklasch/Dropbox/dev/ba/server-wache/db-server/mongodb-data/
-
-db-server:
-	npm start (oder node app.js)
-
-admin-client:
-	node index.js
